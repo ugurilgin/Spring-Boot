@@ -27,8 +27,18 @@ public class Comments {
 	@SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq")
 	@Column(name = "id",unique=true, nullable = false)
 	private Long id;
-	private Long userId;
-	private Long postId;	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id",nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	Post post;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id",nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	User user;
+	 
 	 @Lob
 	 @Column(columnDefinition="text")
 	 private String text;
@@ -49,19 +59,5 @@ public class Comments {
 	
 	public void setText(String text) {
 		this.text = text;
-	}
-	 public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	 public Long getPostId() {
-		return postId;
-	}
-
-	public void setPostId(Long postId) {
-		this.postId = postId;
 	}
 }

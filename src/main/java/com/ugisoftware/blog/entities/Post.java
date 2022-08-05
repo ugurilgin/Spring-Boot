@@ -27,11 +27,16 @@ public class Post {
 	
 	@Column(name = "id",unique=true, nullable = false)
 	private Long id;
-	private Long userId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id",nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)//kullanıcı silindiğinde tüm postlarıda silecek
+	@JsonIgnore
+	User user;
+	//private Long userId;
 	private String title;
 	@Lob
-	@Column(columnDefinition="text")
-	private String text;
+	 @Column(columnDefinition="text")
+	 private String text;
 
 	public Long getId() {
 			return id;
@@ -56,12 +61,12 @@ public class Post {
 	public void setText(String text) {
 		this.text = text;
 	}
-	 public Long getUserId() {
-		return userId;
+	 public User getUser() {
+		return user;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }
