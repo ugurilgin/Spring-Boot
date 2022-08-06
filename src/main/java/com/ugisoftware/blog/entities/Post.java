@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -34,7 +33,7 @@ public class Post {
 	User user;
 	//private Long userId;
 	private String title;
-	@Lob
+	//@Lob
 	 @Column(columnDefinition="text")
 	 private String text;
 
