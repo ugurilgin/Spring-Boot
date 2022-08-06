@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ugisoftware.blog.dto.PostCreateDTO;
+import com.ugisoftware.blog.dto.PostResponseDTO;
 import com.ugisoftware.blog.dto.PostUpdateDTO;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.services.PostServices;
@@ -28,7 +29,7 @@ public PostController(PostServices postServices)
 }
 
 @GetMapping
-public List<Post> getAllPosts(@RequestParam(name = "userid") Optional<Long> userId) {
+public List<PostResponseDTO> getAllPosts(@RequestParam(name = "userid") Optional<Long> userId) {
 	return postServices.getAllPosts(userId);
 }
 

@@ -26,10 +26,9 @@ public class Post {
 	
 	@Column(name = "id",unique=true, nullable = false)
 	private Long id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id",nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)//kullanıcı silindiğinde tüm postlarıda silecek
-	@JsonIgnore
 	User user;
 	//private Long userId;
 	private String title;

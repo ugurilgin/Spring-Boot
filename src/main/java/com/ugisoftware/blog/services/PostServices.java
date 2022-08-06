@@ -2,10 +2,13 @@ package com.ugisoftware.blog.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.stereotype.Service;
 
 import com.ugisoftware.blog.dto.PostCreateDTO;
+import com.ugisoftware.blog.dto.PostResponseDTO;
 import com.ugisoftware.blog.dto.PostUpdateDTO;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.entities.User;
@@ -20,13 +23,15 @@ public PostServices(PostRepository postRepository, UserServices userServices) {
 	this.userServices=userServices;
 }
 
-public List<Post> getAllPosts(Optional<Long> userId) {
+public List<PostResponseDTO> getAllPosts(Optional<Long> userId) {
 	// TODO Auto-generated method stub
+	List<Post> list;
 	if(userId.isPresent())
-		{return postRepository.findByUserId(userId.get());}
+		{list= postRepository.findByUserId(userId.get());}
 		else {
-			return postRepository.findAll();
+			list= postRepository.findAll();
 		}
+	return list.stream().map(p ->  new PostResponseDTO(p)).collect(Collectors.toList()) ;
 }
 
 public Post getPost(Long postId) {
