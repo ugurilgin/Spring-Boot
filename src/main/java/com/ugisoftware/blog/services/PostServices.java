@@ -19,7 +19,7 @@ public class PostServices {
 private PostRepository postRepository;
 private LikeServices likeServices;
 private UserServices userServices;
-public PostServices(PostRepository postRepository, UserServices userServices,LikeServices likeServices) {
+public PostServices(PostRepository postRepository, UserServices userServices) {
 	this.postRepository = postRepository;
 	this.userServices=userServices;
 	
