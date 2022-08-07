@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ugisoftware.blog.dto.LikeCreateDTO;
+import com.ugisoftware.blog.dto.LikeResponseDTO;
 import com.ugisoftware.blog.entities.Like;
 import com.ugisoftware.blog.services.LikeServices;
 
@@ -25,7 +26,7 @@ public LikeController(LikeServices likeServices)
 }
 
 @GetMapping
-public List<Like> getAllLikes(@RequestParam(name="userid") Optional<Long> userId,@RequestParam(name="postid") Optional<Long> postId) {
+public List<LikeResponseDTO> getAllLikes(@RequestParam(name="userid") Optional<Long> userId,@RequestParam(name="postid") Optional<Long> postId) {
 return likeServices.getAllLikes(userId,postId);
 }
 

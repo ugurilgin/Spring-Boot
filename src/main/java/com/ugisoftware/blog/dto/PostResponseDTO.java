@@ -1,20 +1,23 @@
 package com.ugisoftware.blog.dto;
 
+import java.util.List;
+
 import com.ugisoftware.blog.entities.Post;
 
 public class PostResponseDTO {
 private Long id;
 private Long userid;
-private String userNameString;
+private String userName;
 private String title;
 private String text;
-
-public PostResponseDTO(Post entity) {
+private List<LikeResponseDTO> postLikes;
+public PostResponseDTO(Post entity, List<LikeResponseDTO> likes) {
 	this.id = entity.getId();
 	this.userid = entity.getUser().getId();
-	this.userNameString = entity.getUser().getUserName();
+	this.userName = entity.getUser().getUserName();
 	this.title = getTitle();
 	this.text = getText();
+	this.postLikes=likes;
 }
 public Long getId() {
 	return id;
@@ -29,10 +32,10 @@ public void setUserid(Long userid) {
 	this.userid = userid;
 }
 public String getUserName() {
-	return userNameString;
+	return userName;
 }
 public void setUserName(String userNameString) {
-	this.userNameString = userNameString;
+	this.userName = userNameString;
 }
 public String getTitle() {
 	return title;
@@ -46,5 +49,12 @@ public String getText() {
 public void setText(String text) {
 	this.text = text;
 }
+public List<LikeResponseDTO> getPostLikes() {
+	return postLikes;
+}
+public void setPostLikes(List<LikeResponseDTO> postLikes) {
+	this.postLikes = postLikes;
+}
+
 
 }

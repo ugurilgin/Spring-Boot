@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.stereotype.Service;
 
+import com.ugisoftware.blog.dto.LikeResponseDTO;
 import com.ugisoftware.blog.dto.PostCreateDTO;
 import com.ugisoftware.blog.dto.PostResponseDTO;
 import com.ugisoftware.blog.dto.PostUpdateDTO;
@@ -17,12 +17,17 @@ import com.ugisoftware.blog.repositories.PostRepository;
 @Service
 public class PostServices {
 private PostRepository postRepository;
+private LikeServices likeServices;
 private UserServices userServices;
-public PostServices(PostRepository postRepository, UserServices userServices) {
+public PostServices(PostRepository postRepository, UserServices userServices,LikeServices likeServices) {
 	this.postRepository = postRepository;
 	this.userServices=userServices;
+	
 }
-
+public void setLikeService(LikeServices likeServices)
+{
+	this.likeServices=likeServices;
+}
 public List<PostResponseDTO> getAllPosts(Optional<Long> userId) {
 	// TODO Auto-generated method stub
 	List<Post> list;
@@ -31,7 +36,9 @@ public List<PostResponseDTO> getAllPosts(Optional<Long> userId) {
 		else {
 			list= postRepository.findAll();
 		}
-	return list.stream().map(p ->  new PostResponseDTO(p)).collect(Collectors.toList()) ;
+	return list.stream().map(p ->  {
+	List <LikeResponseDTO> likes=likeServices.getAllLikes(Optional.of(null),Optional.of(p.getId()) );
+	return new  PostResponseDTO(p,likes);}).collect(Collectors.toList()) ;
 }
 
 public Post getPost(Long postId) {

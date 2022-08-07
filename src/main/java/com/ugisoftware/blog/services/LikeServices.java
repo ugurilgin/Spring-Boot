@@ -2,11 +2,14 @@ package com.ugisoftware.blog.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 import org.springframework.stereotype.Service;
 
 
 import com.ugisoftware.blog.dto.LikeCreateDTO;
+import com.ugisoftware.blog.dto.LikeResponseDTO;
 import com.ugisoftware.blog.entities.Like;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.entities.User;
@@ -24,19 +27,21 @@ public class LikeServices {
 		this.userServices=userServices;
 	}
 
-	public List<Like> getAllLikes(Optional<Long> userId, Optional<Long> postId) {
+	public List<LikeResponseDTO> getAllLikes(Optional<Long> userId, Optional<Long> postId) {
+		List<Like> list;
 		 if(userId.isPresent() && postId.isPresent())
 		 {
-		 return  likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
+		 list=  likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
 		 }
 		else if (userId.isPresent() )
-		{return likeRepository.findByUserId(userId.get());}
+		{list= likeRepository.findByUserId(userId.get());}
 		else if( postId.isPresent())
-		{return likeRepository.findByPostId(postId.get());}
+		{list= likeRepository.findByPostId(postId.get());}
 		
 		else {
-			return likeRepository.findAll();
+			list= likeRepository.findAll();
 		}
+		 return list.stream().map(p -> new LikeResponseDTO(p)).collect(Collectors.toList());
 	}
 	public Like getLike(Long likeId) {
 		// TODO Auto-generated method stub
