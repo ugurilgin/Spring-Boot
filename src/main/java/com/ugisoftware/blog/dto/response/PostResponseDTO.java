@@ -1,4 +1,4 @@
-package com.ugisoftware.blog.dto;
+package com.ugisoftware.blog.dto.response;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ private List<LikeResponseDTO> postLikes;
 public PostResponseDTO(Post entity, List<LikeResponseDTO> likes) {
 	this.id = entity.getId();
 	this.userid = entity.getUser().getId();
-	this.userName = entity.getUser().getUserName();
+	this.userName = entity.getUser().getUsername();
 	this.title = getTitle();
 	this.text = getText();
 	this.postLikes=likes;

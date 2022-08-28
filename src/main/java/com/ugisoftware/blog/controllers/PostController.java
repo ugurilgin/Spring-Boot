@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ugisoftware.blog.dto.PostCreateDTO;
-import com.ugisoftware.blog.dto.PostResponseDTO;
-import com.ugisoftware.blog.dto.PostUpdateDTO;
+import com.ugisoftware.blog.dto.request.PostCreateDTO;
+import com.ugisoftware.blog.dto.request.PostUpdateDTO;
+import com.ugisoftware.blog.dto.response.PostResponseDTO;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.services.PostServices;
 

@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.ugisoftware.blog.dto.LikeCreateDTO;
-import com.ugisoftware.blog.dto.LikeResponseDTO;
+
+import com.ugisoftware.blog.dto.request.LikeCreateDTO;
+import com.ugisoftware.blog.dto.response.LikeResponseDTO;
 import com.ugisoftware.blog.entities.Like;
 import com.ugisoftware.blog.services.LikeServices;
 

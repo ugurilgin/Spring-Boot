@@ -23,8 +23,7 @@ import javax.persistence.SequenceGenerator;
 public class Like {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_gen")
-	@SequenceGenerator(name = "users_seq_gen", sequenceName = "users_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id",unique=true, nullable = false)
 	private Long id;
 	

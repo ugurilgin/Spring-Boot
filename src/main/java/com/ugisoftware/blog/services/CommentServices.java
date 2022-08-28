@@ -1,15 +1,17 @@
 package com.ugisoftware.blog.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ugisoftware.blog.dto.CommentCreateDTO;
-import com.ugisoftware.blog.dto.CommentUpdateDTO;
+import com.ugisoftware.blog.dto.request.CommentCreateDTO;
+import com.ugisoftware.blog.dto.request.CommentUpdateDTO;
 import com.ugisoftware.blog.entities.Comments;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.entities.User;
+import com.ugisoftware.blog.exceptions.ResourceNotFoundExceptions;
 import com.ugisoftware.blog.repositories.CommentRepository;
 
 
@@ -26,51 +28,57 @@ public CommentServices(CommentRepository commentRepository,UserServices userServ
 }
 
 public List<Comments> getAllComments(Optional<Long> userId, Optional<Long> postId) {
+	 List<Comments> getAllCommented;
 	 if(userId.isPresent() && postId.isPresent())
 	 {
-	 return  commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
+		 getAllCommented=  commentRepository.findByUserIdAndPostId(userId.get(), postId.get());
 	 }
 	else if (userId.isPresent() )
-	{return commentRepository.findByUserId(userId.get());}
+	{getAllCommented= commentRepository.findByUserId(userId.get());}
 	else if( postId.isPresent())
-	{return commentRepository.findByPostId(postId.get());}
+	{getAllCommented= commentRepository.findByPostId(postId.get());}
 	
 	else {
-		return commentRepository.findAll();
+		getAllCommented= commentRepository.findAll();
 	}
+	 return getAllCommented;
 }
 public Comments getComment(Long commentId) {
 	// TODO Auto-generated method stub
-	return commentRepository.findById(commentId).orElse(null);
+	return commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundExceptions("comment not founded"+commentId ));
 }
 
 public Comments createComment(CommentCreateDTO newComment) {
 	// TODO Auto-generated method stub
+	Comments createCommented;
 	User user=userServices.getUser(newComment.getUserId());
 	Post post=postServices.getPost(newComment.getPostId());
 	if(user==null || post==null)
-		return null;
+		createCommented= null;
 	Comments toSave= new Comments();
 	toSave.setId(newComment.getId());
 	toSave.setText(newComment.getText());
 	toSave.setUser(user);
 	toSave.setPost(post);
-	return commentRepository.save(toSave);
+	toSave.setCreateDate(new Date());
+	createCommented= commentRepository.save(toSave);
+	return createCommented;
 }
 
 public Comments updateComment(Long commentId, CommentUpdateDTO editComment) {
 	Optional<Comments> comments=commentRepository.findById(commentId);
+	Comments updateCommented;
 	if(comments.isPresent())
 	{
 		Comments foundedPost=comments.get();
 		foundedPost.setText(editComment.getText());
 		
-		return commentRepository.save(foundedPost);
+		updateCommented= commentRepository.save(foundedPost);
 	}
 	else {
-		{return null;}
+		{updateCommented= null;}
 	}
-	
+	return updateCommented;
 }
 
 public void deleteComment(Long commentId) {

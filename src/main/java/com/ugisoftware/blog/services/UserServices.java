@@ -11,10 +11,11 @@ import com.ugisoftware.blog.repositories.UserRepository;
 @Service
 public class UserServices {
 private UserRepository userRepository;
-
-public UserServices(UserRepository userRepository) {
+private PasswordEncoder passwordEncoder;
+public UserServices(UserRepository userRepository,PasswordEncoder passwordEncoder) {
 
 	this.userRepository = userRepository;
+	this.passwordEncoder=passwordEncoder;
 }
 
 public List<User> getAllUsers() {
@@ -23,11 +24,8 @@ public List<User> getAllUsers() {
 }
 public User createUser(User newUser)
 {
-	PasswordEncoder encoder=new BCryptPasswordEncoder();
-	String passwd=encoder.encode(newUser.getPassword());
-	newUser.setPassword(passwd);
+	
 	return userRepository.save(newUser);
-	//System.out.println(encoder.matches("123456", passwd));
 }
 
 public User getUser(Long userId) {
@@ -37,24 +35,26 @@ public User getUser(Long userId) {
 
 public User updateUser(User updateUser, Long userId) {
 	// TODO Auto-generated method stub
+	User updatedUser;
 	Optional<User> user=userRepository.findById(userId);
 	if(user.isPresent())
 	{
 		User foundedUser=user.get();
-		foundedUser.setUserName(updateUser.getUserName());
-		PasswordEncoder encoder=new BCryptPasswordEncoder();
-		String passwd=encoder.encode(updateUser.getPassword());
-		foundedUser.setPassword(passwd);
-		return userRepository.save(foundedUser);
+		foundedUser.setUsername(updateUser.getUsername());
+		foundedUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+		updatedUser= userRepository.save(foundedUser);
 	}
 	else
 	{
-		return null;
+		updatedUser= null;
 	}
+	return updatedUser;
 }
 
 public void deleteUser(Long userId) {
 	// TODO Auto-generated method stub
 	 userRepository.deleteById(userId);	
 }
+
+
 }

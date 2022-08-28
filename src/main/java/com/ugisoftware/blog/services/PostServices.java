@@ -1,15 +1,16 @@
 package com.ugisoftware.blog.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.ugisoftware.blog.dto.LikeResponseDTO;
-import com.ugisoftware.blog.dto.PostCreateDTO;
-import com.ugisoftware.blog.dto.PostResponseDTO;
-import com.ugisoftware.blog.dto.PostUpdateDTO;
+import com.ugisoftware.blog.dto.request.PostCreateDTO;
+import com.ugisoftware.blog.dto.request.PostUpdateDTO;
+import com.ugisoftware.blog.dto.response.LikeResponseDTO;
+import com.ugisoftware.blog.dto.response.PostResponseDTO;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.entities.User;
 import com.ugisoftware.blog.repositories.PostRepository;
@@ -56,21 +57,24 @@ public Post createPost(PostCreateDTO newPost) {
 	toSave.setText(newPost.getText());
 	toSave.setTitle(newPost.getTitle());
 	toSave.setUser(user);
+	toSave.setCreateDate(new Date());
 	return postRepository.save(toSave);
 }
 
 public Post updatePost(Long postId, PostUpdateDTO editPost) {
 	Optional<Post> post=postRepository.findById(postId);
+	Post updatePost;
 	if(post.isPresent())
 	{
 		Post foundedPost=post.get();
 		foundedPost.setText(editPost.getText());
 		foundedPost.setTitle(editPost.getTitle());
-		return postRepository.save(foundedPost);
+		updatePost= postRepository.save(foundedPost);
 	}
 	else {
-		{return null;}
+		{updatePost= null;}
 	}
+	return updatePost;
 	
 }
 

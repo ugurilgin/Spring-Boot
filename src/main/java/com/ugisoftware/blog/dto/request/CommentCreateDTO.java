@@ -1,25 +1,17 @@
-package com.ugisoftware.blog.dto;
+package com.ugisoftware.blog.dto.request;
 
-import com.ugisoftware.blog.entities.Like;
-
-public class LikeResponseDTO {
+public class CommentCreateDTO {
 private Long id;
 private Long userId;
 private Long postId;
-public LikeResponseDTO(Like entity) {
-	this.id=entity.getId();
-	this.userId = entity.getUser().getId();
-	this.postId = entity.getPost().getId();
-}
+private String text;
 
 public Long getId() {
 	return id;
 }
-
 public void setId(Long id) {
 	this.id = id;
 }
-
 public Long getUserId() {
 	return userId;
 }
@@ -32,6 +24,10 @@ public Long getPostId() {
 public void setPostId(Long postId) {
 	this.postId = postId;
 }
-
-
+public String getText() {
+	return text;
+}
+public void setText(String text) {
+	this.text = text;
+}
 }

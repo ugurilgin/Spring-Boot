@@ -1,4 +1,4 @@
-package com.ugisoftware.blog.dto;
+package com.ugisoftware.blog.dto.request;
 
 public class PostUpdateDTO {
 	private String title;

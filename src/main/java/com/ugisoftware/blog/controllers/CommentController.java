@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ugisoftware.blog.dto.CommentCreateDTO;
-import com.ugisoftware.blog.dto.CommentUpdateDTO;
+import com.ugisoftware.blog.dto.request.CommentCreateDTO;
+import com.ugisoftware.blog.dto.request.CommentUpdateDTO;
 import com.ugisoftware.blog.entities.Comments;
 import com.ugisoftware.blog.services.CommentServices;
 
 @RestController
-@RequestMapping
+@RequestMapping("/comments")
 public class CommentController {
 	private CommentServices commentServices;
 	public CommentController(CommentServices commentServices)

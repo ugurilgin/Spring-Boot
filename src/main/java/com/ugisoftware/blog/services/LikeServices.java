@@ -7,9 +7,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-
-import com.ugisoftware.blog.dto.LikeCreateDTO;
-import com.ugisoftware.blog.dto.LikeResponseDTO;
+import com.ugisoftware.blog.dto.request.LikeCreateDTO;
+import com.ugisoftware.blog.dto.response.LikeResponseDTO;
 import com.ugisoftware.blog.entities.Like;
 import com.ugisoftware.blog.entities.Post;
 import com.ugisoftware.blog.entities.User;
@@ -49,16 +48,18 @@ public class LikeServices {
 	}
 
 	public Like createLike(LikeCreateDTO newLike) {
+		Like createdLike;
 		// TODO Auto-generated method stub
 		User user=userServices.getUser(newLike.getUserId());
 		Post post=postServices.getPost(newLike.getPostId());
 		if(user==null || post==null)
-			return null;
+			createdLike= null;
 		Like toSave= new Like();
 		toSave.setId(newLike.getId());
 		toSave.setUser(user);
 		toSave.setPost(post);
-		return likeRepository.save(toSave);
+		createdLike= likeRepository.save(toSave);
+		return createdLike;
 	}
 
 	
